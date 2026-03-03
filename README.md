@@ -11,7 +11,6 @@
 - [Использование](#использование)
 - [Результаты](#результаты)
 - [Литература](#литература)
-- [Лицензия](#лицензия)
 
 ## Описание проекта
 **Цель:** предсказать количественный уровень экспрессии гена (log2(TPM+1)) для 54 тканей, используя только последовательность ДНК длиной 10 kb вокруг TSS (±5 kb).  
@@ -24,3 +23,87 @@
 - Оценка качества (Pearson R, RMSE) и сравнение с базовыми моделями.
 
 ## Структура репозитория
+.
+├── data/ # Папка для исходных данных (не включена в репозиторий)
+├── notebooks/ # Jupyter notebooks для EDA и экспериментов
+├── src/ # Исходный код
+│ ├── data_preprocessing.py # Загрузка и подготовка данных
+│ ├── dataset.py # Классы Dataset и кэширование
+│ ├── model.py # Определение архитектуры CNN
+│ ├── train.py # Циклы обучения и валидации
+│ ├── evaluate.py # Оценка на тесте и расчёт метрик
+│ └── utils.py # Вспомогательные функции
+├── config.py # Конфигурация (пути, гиперпараметры)
+├── requirements.txt # Зависимости
+├── README.md # Текущий файл
+└── .gitignore
+
+
+## Требования
+- Python 3.8+
+- CUDA (рекомендуется) для обучения на GPU
+- Основные библиотеки: torch, numpy, pandas, pyfaidx, scikit-learn, matplotlib, seaborn, tqdm, h5py
+
+Полный список в `requirements.txt`.
+
+## Установка
+1. Клонируйте репозиторий:
+   ```bash
+   git clone https://github.com/username/gene-expression-prediction.git
+   cd gene-expression-prediction
+
+2. Установите зависимости:
+   pip install -r requirements.txt
+
+3. Скачайте необходимые данные (см. раздел Данные) и поместите их в папку data/.
+
+4. Данные
+Для работы необходимы следующие файлы:
+
+GTEx v8: GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_median_tpm.gct — медианные уровни экспрессии (TPM) по тканям. Скачать с портала GTEx.
+
+GENCODE v39: gencode.v39.annotation.gtf.gz — аннотация генов. Скачать с GENCODE.
+
+Референсный геном hg38: hg38.fa (и индекс hg38.fa.fai). Скачать с UCSC.
+
+После скачивания положите файлы в папку data/. При необходимости измените пути в config.py.
+
+Предобработка
+Скрипт src/data_preprocessing.py выполняет:
+
+Фильтрацию protein-coding генов.
+
+Выбор самого длинного транскрипта для каждого гена и определение TSS.
+
+Извлечение последовательностей из FASTA (окно ±5 kb).
+
+One-hot кодирование.
+
+Разделение по хромосомам (train: 1–18+X, val: 19–20, test: 21–22).
+
+Кэширование one-hot матриц в HDF5 для ускорения последующих запусков.
+
+Основные параметры
+--window – полу-окно вокруг TSS (по умолчанию 5000).
+
+--n_tissues – число тканей для обучения (если нужно ограничить).
+
+--use_cache – использовать кэшированные последовательности.
+
+Все параметры можно посмотреть, запустив скрипты с флагом --help.
+
+## Результаты
+На тестовых хромосомах (21, 22) модель достигла следующих показателей:
+
+Средняя корреляция Пирсона: 0.553
+
+Средняя RMSE: 1.444 (в единицах log2(TPM+1))
+
+Test loss (MSE): 2.098
+
+## Литература
+GTEx Consortium. The GTEx Consortium atlas of genetic regulatory effects across human tissues. Science, 2020.
+
+Avsec Ž. et al. Effective gene expression prediction from sequence by integrating long-range interactions. Nature Methods, 2021 (модель Enformer).
+
+Frankish A. et al. GENCODE reference annotation for the human and mouse genomes. Nucleic Acids Research, 2019.
