@@ -25,7 +25,6 @@
 ## Структура репозитория
 .
 ├── data/ # Папка для исходных данных (не включена в репозиторий)
-├── notebooks/ # Jupyter notebooks для EDA и экспериментов
 ├── src/ # Исходный код
 │ ├── data_preprocessing.py # Загрузка и подготовка данных
 │ ├── dataset.py # Классы Dataset и кэширование
@@ -36,31 +35,13 @@
 ├── config.py # Конфигурация (пути, гиперпараметры)
 ├── requirements.txt # Зависимости
 ├── README.md # Текущий файл
-└── .gitignore
 
-
-## Требования
-- Python 3.8+
-- CUDA (рекомендуется) для обучения на GPU
-- Основные библиотеки: torch, numpy, pandas, pyfaidx, scikit-learn, matplotlib, seaborn, tqdm, h5py
-
-Полный список в `requirements.txt`.
-
-## Установка
-1. Клонируйте репозиторий:
-   ```bash
-   git clone https://github.com/username/gene-expression-prediction.git
-   cd gene-expression-prediction
-
-2. Установите зависимости:
-   pip install -r requirements.txt
-
-3. Скачайте необходимые данные (см. раздел Данные) и поместите их в папку data/.
 
 ## Данные
 Для работы необходимы следующие файлы:
 
 GTEx v8: GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_median_tpm.gct — медианные уровни экспрессии (TPM) по тканям. Скачать с портала GTEx.
+
 (Временная ссылка на датасет: https://drive.google.com/file/d/1FkgW60Pi6LKh6RzqCfOVvqZcbnk6Dovu/view?usp=drive_link )
 
 GENCODE v39: gencode.v39.annotation.gtf.gz — аннотация генов. Скачать с GENCODE.
