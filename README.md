@@ -36,53 +36,35 @@
 
 ## Данные
 Для работы необходимы следующие файлы:
-
+---
 GTEx v8: GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_median_tpm.gct — медианные уровни экспрессии (TPM) по тканям. Скачать с портала GTEx.
-
-(Временная ссылка на датасет: https://drive.google.com/file/d/1FkgW60Pi6LKh6RzqCfOVvqZcbnk6Dovu/view?usp=drive_link )
-
+**(Временная ссылка на датасет: https://drive.google.com/file/d/1FkgW60Pi6LKh6RzqCfOVvqZcbnk6Dovu/view?usp=drive_link )**
+---
 GENCODE v39: gencode.v39.annotation.gtf.gz — аннотация генов. Скачать с GENCODE.
-(Временная ссылка на датасет: https://drive.google.com/file/d/1vkWz89uZ_HAOVOkZDdRSbvxgYgt3ZoWe/view?usp=drive_link )
+**(Временная ссылка на датасет: https://drive.google.com/file/d/1vkWz89uZ_HAOVOkZDdRSbvxgYgt3ZoWe/view?usp=drive_link )**
+---
 Референсный геном hg38: hg38.fa (и индекс hg38.fa.fai). Скачать с UCSC.
-(Временная ссылка на датасет: https://drive.google.com/file/d/1ydGThyX3LOeg46H7IjGz796Zi9CqWzYt/view?usp=drive_link )
+**(Временная ссылка на датасет: https://drive.google.com/file/d/1ydGThyX3LOeg46H7IjGz796Zi9CqWzYt/view?usp=drive_link )**
 После скачивания положите файлы в папку data/. При необходимости измените пути в config.py.
-
-Предобработка
-Скрипт src/data_preprocessing.py выполняет:
-
-Фильтрацию protein-coding генов.
-
-Выбор самого длинного транскрипта для каждого гена и определение TSS.
-
-Извлечение последовательностей из FASTA (окно ±5 kb).
-
-One-hot кодирование.
-
-Разделение по хромосомам (train: 1–18+X, val: 19–20, test: 21–22).
-
-Кэширование one-hot матриц в HDF5 для ускорения последующих запусков.
-
-Основные параметры
---window – полу-окно вокруг TSS (по умолчанию 5000).
-
---n_tissues – число тканей для обучения (если нужно ограничить).
-
---use_cache – использовать кэшированные последовательности.
-
-Все параметры можно посмотреть, запустив скрипты с флагом --help.
-
+## Использование
+Аргументы:
+- `--window` — размер половины окна (целое число, по умолчанию: `WINDOW`).
+- `--batch_size` — размер батча (целое число, по умолчанию: `BATCH_SIZE`).
+- `--epochs` — количество эпох (целое число, по умолчанию: `EPOCHS`).
+- `--lr` — скорость обучения (число с плавающей точкой, по умолчанию: `LEARNING_RATE`).
+- `--n_tissues` — количество тканей для использования (целое число, по умолчанию: `DEFAULT_N_TISSUES`).
+- `--save_model` — путь для сохранения обученной модели (строка, по умолчанию: `SAVE_MODEL_PATH`).
+- `--curr_model` — путь к существующей модели для дообучения или продолжения (строка, по умолчанию: `CURRENT_MODEL_PATH`).
+---
+Пример запуска:
+- `python main.py --epochs 100 --batch_size 64 --lr 1e-4 --n_tissues 20 --window 1000`
 ## Результаты
-На тестовых хромосомах (21, 22) модель достигла следующих показателей:
+На тестовых хромосомах (21, 22) модели достигли следующих показателей:
 
-Средняя корреляция Пирсона: 0.553
+CNN средняя корреляция Пирсона: 0.658
 
-Средняя RMSE: 1.444 (в единицах log2(TPM+1))
+LSTM средняя корреляция Пирсона: 0.349
 
-Test loss (MSE): 2.098
-
+MLP средняя корреляция Пирсона: 0.357
 ## Литература
-GTEx Consortium. The GTEx Consortium atlas of genetic regulatory effects across human tissues. Science, 2020.
-
 Avsec Ž. et al. Effective gene expression prediction from sequence by integrating long-range interactions. Nature Methods, 2021 (модель Enformer).
-
-Frankish A. et al. GENCODE reference annotation for the human and mouse genomes. Nucleic Acids Research, 2019.
