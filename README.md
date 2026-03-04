@@ -66,5 +66,7 @@ CNN средняя корреляция Пирсона: 0.658
 LSTM средняя корреляция Пирсона: 0.349
 
 MLP средняя корреляция Пирсона: 0.357
+
+
 ## Литература
 Avsec Ž. et al. Effective gene expression prediction from sequence by integrating long-range interactions. Nature Methods, 2021 (модель Enformer).
