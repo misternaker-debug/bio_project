@@ -69,3 +69,4 @@ MLP средняя корреляция Пирсона: 0.357
 
 ## Литература
 Avsec Ž. et al. Effective gene expression prediction from sequence by integrating long-range interactions. Nature Methods, 2021 (модель Enformer).
+Karollus, A., Mauermeier, T. & Gagneur, J. Current sequence-based models capture gene expression determinants in promoters but mostly ignore distal enhancers. Genome Biol 24, 56 (2023). https://doi.org/10.1186/s13059-023-02899-9
