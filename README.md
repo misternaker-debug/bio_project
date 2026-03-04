@@ -36,13 +36,13 @@
 
 ## Данные
 Для работы необходимы следующие файлы:
----
+
 GTEx v8: GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_median_tpm.gct — медианные уровни экспрессии (TPM) по тканям. Скачать с портала GTEx.
 **(Временная ссылка на датасет: https://drive.google.com/file/d/1FkgW60Pi6LKh6RzqCfOVvqZcbnk6Dovu/view?usp=drive_link )**
----
+
 GENCODE v39: gencode.v39.annotation.gtf.gz — аннотация генов. Скачать с GENCODE.
 **(Временная ссылка на датасет: https://drive.google.com/file/d/1vkWz89uZ_HAOVOkZDdRSbvxgYgt3ZoWe/view?usp=drive_link )**
----
+
 Референсный геном hg38: hg38.fa (и индекс hg38.fa.fai). Скачать с UCSC.
 **(Временная ссылка на датасет: https://drive.google.com/file/d/1ydGThyX3LOeg46H7IjGz796Zi9CqWzYt/view?usp=drive_link )**
 После скачивания положите файлы в папку data/. При необходимости измените пути в config.py.
